@@ -57,16 +57,15 @@ class Game {
     this.emitter = new Emitter(this);
     this.shake = new Shake(this);
 
-    this.load = new Load(this);
-
-		// slows down ios loading time for order of magnitude
-    if (!$.data.audio) {
+    if (!$.data.audio || this.firefox || this.ios) {
       this.audio = { play: function() {}, say: function() {} };
     } else {
-      // this.audio = new $.Audio($.data.sfx);
       this.audio = $.Audio;
       this.audio.init();
     }
+
+    this.load = new Load(this);
+
 
   }
 
@@ -97,25 +96,21 @@ class Game {
 
   loop() {
 
-    if (document.hasFocus()) {
-      this.stats.begin();
-      this.currStep = new Date().getTime();
-      this.dt = this.currStep - this.prevStep;
-      this.tick += 1;
-      this.c.className = '';
-      this.input.poll();
+    this.stats.begin();
+    this.currStep = new Date().getTime();
+    this.dt = this.currStep - this.prevStep;
+    this.tick += 1;
+    this.c.className = '';
+    this.input.poll();
 
 
-      this.shake.update();
-      this.state.update();
-      this.state.render();
+    this.shake.update();
+    this.state.update();
+    this.state.render();
 
-      this.prevStep = this.currStep;
-      this.stats.end();
+    this.prevStep = this.currStep;
+    this.stats.end();
 
-    } else {
-      this.dt = 15;
-    }
 
     requestAnimationFrame(() => this.loop());
 

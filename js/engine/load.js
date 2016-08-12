@@ -62,9 +62,9 @@ class Load {
         i[n + '_w'] = $.H.resize(i[n], 1, [255,255,255]);
       }
     
-      window.setTimeout(function() {
+      setTimeout(() => {
         g.init();
-      }, 10);
+      }, 2000);
 
   }
 
