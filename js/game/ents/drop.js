@@ -3,7 +3,7 @@ class Drop extends Sprite {
   constructor(g, o) {
     o.vx = 0;
     o.vy = 0;
-    o.gravity = 0.1,
+    o.gravity = 0.1;
     o.scale = 3;
     o.i = 'drop';
     o.group = 'baddie';
@@ -67,4 +67,4 @@ class Drop extends Sprite {
   }
 
 
-};
+}

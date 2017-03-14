@@ -13,7 +13,7 @@ class State {
   update() {
 
     let g = this.g,
-        i = g.ents.length;;
+        i = g.ents.length;
 
     for (let n of g.ents) {
       n.update();

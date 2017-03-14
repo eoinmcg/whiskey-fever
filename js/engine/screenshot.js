@@ -30,7 +30,7 @@ window.addEventListener('keydown', function(e) {
     }
 
     var imgs = document.getElementsByTagName('img');
-    for (n in imgs) {
+    for (var n in imgs) {
       console.log(imgs[n]);
     }
     $.saveImgs();
@@ -67,7 +67,7 @@ console.log($.clipScreens);
     }
 
     var imgs = document.getElementsByTagName('img');
-    for (n in imgs) {
+    for (var n in imgs) {
       console.log(imgs[n]);
     }
     $.saveImgs();

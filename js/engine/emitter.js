@@ -19,7 +19,7 @@ class Emitter {
     }
       
 
-  };
+  }
 
     explosion(num, x, y, particles, magnitude) {
 
@@ -36,7 +36,7 @@ class Emitter {
           }));
         }, num * 150);
       }
-    };
+    }
 
 
 }
