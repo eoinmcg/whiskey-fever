@@ -147,7 +147,7 @@ gulp.task('report', ['clean'], function() {
       remaining = limit - size,
       percentage = (remaining / limit) * 100;
 
-  percentage = Math.round(percentage * 100) / 100
+  percentage = Math.round(percentage * 100) / 100;
 
   console.log('\n\n-------------');
   console.log('BYTES USED: ' + stat.size);
@@ -170,9 +170,7 @@ gulp.task('encodeAll', function() {
 
     var i =  fs.readFileSync(img);
     return i.toString('base64');
-
-    return i;
-  }
+  };
 
   for (n in files) {
     if (files[n].indexOf(ext) !== -1) {
