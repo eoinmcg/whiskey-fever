@@ -3,7 +3,7 @@ $.Audio = {
 	init: function() {
 
 		var aCtx = AudioContext || webkitAudioContextx;
-		this.ctx = (aCtx) ? new aCtx : false;
+		this.ctx = (aCtx) ? new aCtx(): false;
 
 		if (this.ctx) {
 			this.encode();
@@ -24,7 +24,6 @@ $.Audio = {
 			for (i = 0; i < len; i++)        {
 					bytes[i] = data.charCodeAt(i);
 			}
-			// console.log(len, bytes.buffer);
 			return bytes.buffer;
 
 		};
@@ -37,7 +36,7 @@ $.Audio = {
 
 		for (var n in $.data.sfx) {
 			decode(n);
-			};
+    }
 
 	},
 

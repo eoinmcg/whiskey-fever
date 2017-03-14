@@ -48,9 +48,9 @@ class P1 extends Sprite {
       this.flip.x = 1;
     }
 
-    if (this.lastPos.x !== this.x 
-      && this.anim.name !== 'walk'
-      && this.anim.name !== 'gulp') {
+    if (this.lastPos.x !== this.x &&
+      this.anim.name !== 'walk' &&
+      this.anim.name !== 'gulp') {
       this.changeAnim('walk');
     } else if (this.lastPos.x === this.x && this.anim.name !== 'gulp') {
       this.changeAnim('stand');

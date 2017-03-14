@@ -29,8 +29,8 @@ class Draw {
     let c, ctx;
 
     try {
-      c = $.H.mkCanvas(i.width * scale, i.height * scale),
-          ctx = c.getContext('2d');
+      c = $.H.mkCanvas(i.width * scale, i.height * scale);
+      ctx = c.getContext('2d');
     } catch(e) {
       console.log(e, i, scale, n);
     }
@@ -44,7 +44,7 @@ class Draw {
 
 
 		return c;
-  };
+  }
 
 
   flip(i, flipH, flipV) {
@@ -66,7 +66,7 @@ class Draw {
 
 		return c;
 
-  };
+  }
 
 
   text(s,f,x,y) {

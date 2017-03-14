@@ -11,7 +11,7 @@ class Shake {
     this.mag = mag;
     this.ttl = ttl;
     this.l = (window.innerWidth - this.c.style.width) / 2;
-  };
+  }
 
   update() {
 
@@ -31,7 +31,7 @@ class Shake {
     }
 
 
-  };
+  }
 
-};
+}
 

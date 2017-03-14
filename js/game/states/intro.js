@@ -94,4 +94,4 @@ class Intro extends State {
 
   }
 
-};
+}

@@ -7,7 +7,7 @@ class Cloud extends Sprite {
     o.collidesWith = 'baddie';
     o.frames = 3;
     o.scale = 4;
-    o.vx = 4,
+    o.vx = 4;
     o.vy = 4;
     o.i = 'cloud';
     super(g, o); 

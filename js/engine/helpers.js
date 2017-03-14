@@ -22,60 +22,9 @@ $.H = {
 
   },
 
-  tween: function(current, dest, speed) {
-    let fps = 60;
-    let t = dest * fps / speed + current;
-    return t;
-  },
-
   tween: function (t, b, c, d) {
       return c*t/d + b;
   },
-
-  // tween: function (t, b, c, d) {
-  //     return c*t/d + b;
-  // },
-
-  // getDist: function(v1, v2) {
-  //   var dx = v1.x - v2.x,
-  //       dy = v1.y - v2.y;
-
-  //   return Math.sqrt((dx * dx) + (dy * dy));
-  // },
-
-
-  // getAngle: function(v1, v2) {
-  //   var dx = v1.x - v2.x,
-  //       dy = v1.y - v2.y;
-
-  //   return (Math.atan2(dy, dx));
-  // },
-
-    // toggleFullScreen: function() {
-
-    //   var d = document;
-
-    //    if (!d.fullscreenElement &&    // alternative standard method
-    //     !d.mozFullScreenElement && !d.webkitFullscreenElement) {  // current working methods
-    //      if (d.documentElement.requestFullscreen) {
-    //        d.documentElement.requestFullscreen();
-    //      } else if (d.documentElement.mozRequestFullScreen) {
-    //        d.documentElement.mozRequestFullScreen();
-    //      } else if (d.documentElement.webkitRequestFullscreen) {
-    //        d.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-    //      }
-    //       // fs.className = '';
-    //    } else {
-    //       if (d.cancelFullScreen) {
-    //          d.cancelFullScreen();
-    //       } else if (d.mozCancelFullScreen) {
-    //          d.mozCancelFullScreen();
-    //       } else if (d.webkitCancelFullScreen) {
-    //         d.webkitCancelFullScreen();
-    //       }
-    //    }
-    // },
-
 
   mkFavicon: function(i) {
 

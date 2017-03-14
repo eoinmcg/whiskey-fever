@@ -9,9 +9,9 @@ class Game {
     this.l = document.getElementById('h');
 
     if ($.data.orientation === 'portrait') {
-      w = 320, h = 480;
+      w = 320; h = 480;
     } else {
-      w = 480, h = 320;
+      w = 480; h = 320;
     }
 
     this.c = document.getElementsByTagName('canvas')[0];
@@ -167,7 +167,7 @@ class Game {
           this.c.style.display = 'block';
       }
 
-    if (window.navigator.standalone == true && this.ios) {
+    if (window.navigator.standalone === true && this.ios) {
       return;
     }
 
@@ -223,7 +223,7 @@ class Game {
 
     f.scale = scale;
     return f;
-  };
+  }
 
   addEvent(e) {
     this.events.push(e); 
