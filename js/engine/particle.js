@@ -39,10 +39,7 @@ class Particle extends Sprite {
 
     let g = this.g;
 
-    if (g.ios) {
-      return;
-    }
-
+    // if (g.ios) { return; }
 
     g.draw.rect(this.x, this.y, 5, 5, $.cols[this.col]);
 
