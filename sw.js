@@ -1,4 +1,4 @@
-var cacheName = 'v1:static';
+var cacheName = 'v1.1:static';
 
 self.addEventListener('install', function(e) {
   // Once the service worker is installed, go ahead and fetch the resources to make this work offline.
