@@ -18,7 +18,7 @@ class Explosion extends Sprite {
 
     this.angle = 0;
     this.grow = 1;
-    
+
 
   }
 
@@ -47,12 +47,11 @@ class Explosion extends Sprite {
   render() {
 
     let x = this.startX - (this.w /2),
-        y = this.startY - (this.h / 2),
-        g = this.g,
-        i = this.i;
-        // i = g.draw.rotate(this.i, this.angle);
+      y = this.startY - (this.h / 2),
+      g = this.g,
+      i = this.i;
+
     g.ctx.drawImage(i, x, y);
-    // console.log(i.src, x, y);
 
   }
 

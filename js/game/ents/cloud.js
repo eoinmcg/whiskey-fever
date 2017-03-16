@@ -36,7 +36,7 @@ class Cloud extends Sprite {
 
 
 
-  update() {
+  update(step) {
 
 
     if (this.p.gameOver) {
@@ -68,10 +68,10 @@ class Cloud extends Sprite {
     }
 
     if (this.x <= 0) {
-        this.dir = 1;
+      this.dir = 1;
     }
     else if (this.x >= (this.g.w - this.w)) {
-        this.dir = -1;
+      this.dir = -1;
     }
 
     if (this.changeDir <= 0) {
@@ -87,7 +87,7 @@ class Cloud extends Sprite {
 
     this.x += (this.dir * this.vx );
 
-    this.updateAnim();
+    this.updateAnim(step);
     this.changeDir--;
     this.drop--;
 

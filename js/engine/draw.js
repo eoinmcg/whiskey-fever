@@ -26,14 +26,8 @@ class Draw {
 
   scale(i, scale, n) {
 
-    let c, ctx;
-
-    try {
-      c = $.H.mkCanvas(i.width * scale, i.height * scale);
+    let c = $.H.mkCanvas(i.width * scale, i.height * scale),
       ctx = c.getContext('2d');
-    } catch(e) {
-      console.log(e, i, scale, n);
-    }
 
     if (c.width) {
       ctx.save();
@@ -43,19 +37,19 @@ class Draw {
     }
 
 
-		return c;
+    return c;
   }
 
 
   flip(i, flipH, flipV) {
 
     let c = $.H.mkCanvas(i.width, i.height),
-        ctx = c.getContext('2d'),
-        scaleH = flipH ? -1 : 1, 
-        scaleV = flipV ? -1 : 1,
-        posX = flipH ? i.width * -1 : 0,
-        posY = flipV ? i.height * -1 : 0;
-    
+      ctx = c.getContext('2d'),
+      scaleH = flipH ? -1 : 1, 
+      scaleV = flipV ? -1 : 1,
+      posX = flipH ? i.width * -1 : 0,
+      posY = flipV ? i.height * -1 : 0;
+
     c.width = i.width;
     c.height = i.height;
 
@@ -64,41 +58,48 @@ class Draw {
     ctx.drawImage(i, posX, posY, i.width, i.height);
     ctx.restore();
 
-		return c;
+    return c;
 
   }
 
 
-  text(s,f,x,y) {
+  text(s,f,x,y, outline) {
 
     let i = 0,
-        ctx = this.ctx,
-        firstChar = 65,
-        offset = 0,
-        w = 3 * f.scale,
-        h = 5 * f.scale,
-        spacing = 1 * f.scale,
-        sW =  $.H.textWidth(s, f),
-        charPos = 0;
+      ctx = this.ctx,
+      firstChar = 65,
+      offset = 0,
+      w = 3 * f.scale,
+      h = 5 * f.scale,
+      spacing = 1 * f.scale,
+      sW =  $.H.textWidth(s, f),
+      charPos = 0;
 
     if (typeof(s) === 'number' || s[0] === '0') {
-        s += '';
-        offset = 43;
+      s += '';
+      offset = 43;
     }
 
     x = x || (this.w - sW) / 2;
 
+    if (outline) {
+      this.text(s,outline.f,x+outline.offset,y);
+      this.text(s,outline.f,x-outline.offset,y); 
+      this.text(s,outline.f,x,y+outline.offset); 
+      this.text(s,outline.f,x,y-outline.offset); 
+    }
+
 
     for (i = 0; i < s.length; i += 1) {
-        charPos = ( ( s.charCodeAt(i) - firstChar ) + offset ) * (w + spacing);
-          if (charPos > -1) {
-            ctx.drawImage(f, 
-                charPos, 0, 
-                w, h,
-                ~~x, ~~y,
-                w, h);
-          }
-            x += w + spacing;
+      charPos = ( ( s.charCodeAt(i) - firstChar ) + offset ) * (w + spacing);
+      if (charPos > -1) {
+        ctx.drawImage(f, 
+          charPos, 0, 
+          w, h,
+          ~~x, ~~y,
+          w, h);
+      }
+      x += w + spacing;
     }
   }
 

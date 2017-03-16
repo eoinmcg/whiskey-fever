@@ -41,12 +41,12 @@ window.addEventListener('keydown', function(e) {
 
 
 $.log = function() {
-console.log(arguments);
+  console.log(arguments);
 };
 
 $.makeAnimFrames = function() {
 
-console.log($.clipScreens);
+  console.log($.clipScreens);
 
   if ($.clipScreens > -1) {
 
@@ -76,31 +76,31 @@ console.log($.clipScreens);
 
 $.saveImgs = function() {
 
-      let img = document.getElementsByTagName('img')[0];
+  let img = document.getElementsByTagName('img')[0];
 
-      if (!img) {
-        return;
-      }
+  if (!img) {
+    return;
+  }
 
-      let src = img.src,
-          ajax = new XMLHttpRequest(),
-          params = 'img='+src;
+  let src = img.src,
+    ajax = new XMLHttpRequest(),
+    params = 'img='+src;
 
-      img.parentNode.removeChild(img);
+  img.parentNode.removeChild(img);
 
-      ajax.open('POST', 'img.php', true);
-      ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      ajax.onreadystatechange = function() {
-          if(ajax.readyState == 4 && ajax.status == 200) {
-              console.log('RESPONSE' + ajax.responseText);
-              window.setTimeout(function() {
-                $.saveImgs();
-              }, 1000);
-          }
+  ajax.open('POST', 'img.php', true);
+  ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  ajax.onreadystatechange = function() {
+    if(ajax.readyState == 4 && ajax.status == 200) {
+      console.log('RESPONSE' + ajax.responseText);
+      window.setTimeout(function() {
+        $.saveImgs();
+      }, 1000);
+    }
 
-      };
+  };
 
-      ajax.send(params);
+  ajax.send(params);
 
-  
+
 };

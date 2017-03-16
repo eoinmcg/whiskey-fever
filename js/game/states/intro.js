@@ -47,16 +47,16 @@ class Intro extends State {
       text: 'SKIP',
       cb: () => { 
         this.g.changeState('Play');
-        }
+      }
     }));
 
 
   }
 
-  update() {
+  update(step) {
 
 
-    super.update();
+    super.update(step);
     this.p1.changeAnim('stand');
     this.p1.x = this.g.w / 2 - (this.p1.w / 2);
     this.p1.flip.x = this.flip;
@@ -65,8 +65,8 @@ class Intro extends State {
   }
 
 
-  render() {
-    
+  render(step) {
+
     this.g.draw.clear($.cols.cloudblue);
 
     this.g.ctx.drawImage(this.hills, 0, 290);
@@ -87,7 +87,7 @@ class Intro extends State {
       cb: () => {
         this.g.audio.play('tap');
         this.g.ents.push(new Text(this.g, {x: false, y: 350, text: text, 
-                        scale: scale, col: col}));
+          scale: scale, col: col}));
         this.flip = (this.flip) ? 0 : 1;
       }
     });

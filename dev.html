@@ -8,11 +8,9 @@
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Whiskey Fever">
-<link rel="apple-touch-icon" href="icons/icon-152x152.png">
 
 <style type="text/css">
-body { margin: 0; padding: 0; background: #222; font-family: "Lucida Console", Courier, monospace; -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; user-select: none; } canvas { background: #fff; display: block; margin: 0 auto; display: none; image-rendering: pixelated; image-rendering: -moz-pixelated; image-rendering: -webkit-pixelated; } canvas.hover { cursor: pointer; } h1 { left: 0; line-height: 200px; margin: auto; margin-top: -100px; position: absolute; top: 50%; width: 100%; text-align: center; } #l { color: #fff; font-size: 150%; } 
+body { margin: 0; padding: 0; background: #222; font-family: "Lucida Console", Courier, monospace; -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; user-select: none; } canvas { background: #fff; display: block; margin: 0 auto; display: none; image-rendering: pixelated; image-rendering: -moz-pixelated; image-rendering: -webkit-pixelated; } h1 { left: 0; line-height: 200px; margin: auto; margin-top: -100px; position: absolute; top: 50%; width: 100%; text-align: center; } #l { color: #a3ce27; font-size: 150%; } 
 </style>
 
 </head>
@@ -21,6 +19,7 @@ body { margin: 0; padding: 0; background: #222; font-family: "Lucida Console", C
 <div id="l"><h1 id="h">Loading</h1></div>
 <div id="fs"></div>
 <canvas></canvas>
+
 
 <script src="js/lib/jsfxr.min.js"></script>
 <script src="js/lib/stats.js"></script>
@@ -45,19 +44,20 @@ body { margin: 0; padding: 0; background: #222; font-family: "Lucida Console", C
 
 <script src="js/engine/screenshot.js"></script>
 
+<script src="js/game/ents/bonus.js"></script>
+<script src="js/game/ents/cloud.js"></script>
+<script src="js/game/ents/drop.js"></script>
+<script src="js/game/ents/label.js"></script>
+<script src="js/game/ents/explosion.js"></script>
+<script src="js/game/ents/lightning.js"></script>
+<script src="js/game/ents/p1.js"></script>
+<script src="js/game/ents/sky.js"></script>
+<script src="js/game/ents/text.js"></script>
+
 <script src="js/game/states/title.js"></script>
 <script src="js/game/states/intro.js"></script>
 <script src="js/game/states/play.js"></script>
 
-<script src="js/game/ents/label.js"></script>
-<script src="js/game/ents/p1.js"></script>
-<script src="js/game/ents/sky.js"></script>
-<script src="js/game/ents/cloud.js"></script>
-<script src="js/game/ents/lightning.js"></script>
-<script src="js/game/ents/explosion.js"></script>
-<script src="js/game/ents/drop.js"></script>
-<script src="js/game/ents/bonus.js"></script>
-<script src="js/game/ents/text.js"></script>
 
 </body>
 </html>

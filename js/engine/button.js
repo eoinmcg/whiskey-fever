@@ -35,14 +35,14 @@ class Button extends Sprite {
 
     this.currentCol = (this.hover || (this.hover && click)) ?
       this.clickCol : this.col;
-      
+
     if (( !this.clicked && this.hover && click ) || 
-        ( !this.clicked && this.triggerOnEnter && this.g.input.keys.enter )) {
-      this.g.audio.play('tap');
-      this.clicked = true;
-      setTimeout( () => { this.cb.call(); }, this.delay);
+      ( !this.clicked && this.triggerOnEnter && this.g.input.keys.enter )) {
+        this.g.audio.play('tap');
+        this.clicked = true;
+        setTimeout( () => { this.cb.call(); }, this.delay);
     }
- 
+
 
 
   }

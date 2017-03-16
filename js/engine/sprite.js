@@ -8,10 +8,11 @@ class Sprite {
 
     this.id = Date.now() + '-' + g.ents.length;
     this.angle = 0;
-    this.tick = 0;
 
     this.lastPos = { x: this.x, y: this.y };
     this.flip = { x: 0, y: 0 };
+
+    this.restrict = true;
 
     this.scale = o.scale || 1;
     this.frame = o.frame || 1;
@@ -19,13 +20,20 @@ class Sprite {
     this.frameRate = o.frameRate || 80;
     this.frameNext = o.frameNext || 0;
 
+
     for (let n in o) {
       this[n] = o[n];
     }
 
+    this.o = o;
+
     if (o.i) {
       this.mkImg(o.i);
     }
+
+    this.bound = o.bound || {
+      w: this.w, h: this.h, x: 0, y: 0
+    };
 
     this.init();
   }
@@ -36,22 +44,21 @@ class Sprite {
     this.changeAnim('idle');
   }
 
-  update() {
+  update(step) {
 
     this.lastPos.x = this.x;
     this.lastPos.y = this.y;
-
-    this.tick += ( this.g.dt / 100 );
-
 
     if (this.collidesWith) {
       this.hitGroup(this.collidesWith);
     }
 
 
-    this.updateAnim();
-    this.updateMove();
-    this.restrictToScreen();
+    this.updateAnim(step);
+    this.updateMove(step);
+    if (this.restrict) {
+      this.restrictToScreen();
+    }
 
 
     if (this.gravity) {
@@ -62,7 +69,7 @@ class Sprite {
 
   }
 
-  updateAnim() {
+  updateAnim(step) {
 
 
     if (this.frameNext < 0) {
@@ -80,24 +87,24 @@ class Sprite {
 
       this.frame = this.anim.frames[this.anim.counter];
     }
-    this.frameNext -= this.g.dt;
+    this.frameNext -= step * 1000;
   }
 
 
-  updateMove() { }
+  updateMove(step) { }
 
   restrictToScreen() {
     if (this.x < 0) { this.x = 0; }
     if (this.x > this.g.w - this.w) { this.x = this.g.w - this.w; }
-    if (this.y < 0) { this.y = 0; }
+    // if (this.y < 0) { this.y = 0; }
     if (this.y > this.g.h - this.h) { this.y = this.g.h - this.h; }
   }
 
   render() {
 
     let g = this.g,
-        i = this.i,
-        frame = this.frame;
+      i = this.i,
+      frame = this.frame;
 
     if (i) {
 
@@ -111,12 +118,21 @@ class Sprite {
 
       }
 
+
       g.ctx.drawImage(i, 
         ( frame * this.w ) - this.w, 0,
         this.w, this.h,
         ~~this.x, ~~this.y,
         this.w, this.h
-        );
+      );
+
+      // this.g.ctx.globalAlpha = 0.3;
+      // this.g.draw.rect(
+      //   this.x + this.bound.x, this.y + this.bound.y,
+      //   this.bound.w, this.bound.h, $.cols.bloodred
+      // );
+      // this.g.ctx.globalAlpha = 1;
+
     } else {
       this.g.draw.rect(~~this.x, ~~this.y, this.w, this.h, this.col);
     }
@@ -143,13 +159,13 @@ class Sprite {
     let g = this.g,
       i = g.ents.length;
 
-      while (i--) {
+    while (i--) {
 
       if (g.ents[i] && g.ents[i].group === group && 
-          g.ents[i].id !== this.id && this.hit(g.ents[i]) &&
-          g.ents[i].dead === false) {
-        this.doDamage(g.ents[i]);
-        g.ents[i].receiveDamage(this);
+        g.ents[i].id !== this.id && this.hit(g.ents[i]) &&
+        g.ents[i].dead === false) {
+          this.doDamage(g.ents[i]);
+          g.ents[i].receiveDamage(this);
       } 
     }
 
@@ -157,20 +173,20 @@ class Sprite {
 
   hit(o) {
 
-    return !((o.y+o.h-1<this.y) || (o.y>this.y+this.h-1) ||
-      (o.x+o.w-1<this.x) || (o.x>this.x+this.w-1));
-      
+    return !((o.y+o.h<this.y) || (o.y>this.y+this.h) ||
+      (o.x+o.w<this.x) || (o.x>this.x+this.w));
+
   }
 
   mkImg(name) {
-      
-      let g = this.g;
 
-      this.i = g.draw.scale(g.imgs[name], this.scale);
+    let g = this.g;
 
-      this.w = ( this.i.width / this.frames);
-      this.h = this.i.height;
-      this.iHurt = g.draw.scale(g.imgs[name + '_w'], this.scale);
+    this.i = g.draw.scale(g.imgs[name], this.scale);
+
+    this.w = ( this.i.width / this.frames);
+    this.h = this.i.height;
+    this.iHurt = g.draw.scale(g.imgs[name + '_w'], this.scale);
 
 
   }
@@ -188,4 +204,22 @@ class Sprite {
     this.frame = this.anim.frames[0];
     this.frameNext = this.anim.rate;
   }
+
+
+  rotate(img, angle) {
+    var c = document.createElement('canvas'),
+      ctx = c.getContext('2d'),
+      size = Math.max(img.width, img.height) + 6,
+      deg =  angle* (180 / Math.PI);
+
+    c.width = size;
+    c.height = size;
+
+    ctx.translate(size/2, size/2);
+    ctx.rotate(angle + Math.PI/2);
+    ctx.drawImage(img, -(img.width/2), -(img.height/2));
+
+    return c;
+  }
+
 }
