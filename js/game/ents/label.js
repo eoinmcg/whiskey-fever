@@ -14,8 +14,8 @@ class Label extends Sprite {
     this.vx = 1;
   }
 
-  update() {
-		this.distX = this.destX - this.x;
+  update(step) {
+    this.distX = this.destX - this.x;
 
     this.x = $.H.tween(33, this.x, this.distX, this.speed);
   }

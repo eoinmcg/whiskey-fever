@@ -92,19 +92,9 @@ gulp.task('addjs', ['jsmin'], function() {
       return data;
     });
 
-    var i, tmp, extra_js = '';
-
-    for (i = 0; i < exclude_min.length; i += 1) {
-      // console.log(exclude_min[i])
-      extra_js += fs.readFileSync(exclude_min[i], 'utf-8', function(e, data) {
-        return data;
-      });
-    }
-    // console.log(extra_js.length, 'OK', exclude_min);
-
     var stream = gulp.src('dev.html')
       .pipe(replace(/<.*?script.*?>.*?<\/.*?script.*?>/igm, ''))
-      .pipe(replace(/<\/body>/igm, '<script>'+extra_js+' '+js+'</script></body>'))
+      .pipe(replace(/<\/body>/igm, '<script src="js/lib/jsfxr.min.js"></script><script src="g.js"></script></body>'))
       .pipe(htmlmin({collapseWhitespace: true}))
       .pipe(rename('index.html'))
       .pipe(whitespace({removeTrailing: true, removeLeading: true}))
@@ -164,17 +154,22 @@ gulp.task('encodeAll', function() {
       re = /\"/gi,
       encoded = {},
       output = '$.data.i = ',
+      totalImages = 0,
       n;
 
   var encode = function(img) {
 
     var i =  fs.readFileSync(img);
-    return i.toString('base64');
+    i = i.toString('base64').replace('R0lGODlh', '');
+    console.log(i);
+
+    return i;
   };
 
   for (n in files) {
     if (files[n].indexOf(ext) !== -1) {
       encoded[files[n].replace(ext, '')] = encode('a/'+files[n]);
+      totalImages += 1;
     } 
 
   }
@@ -183,8 +178,10 @@ gulp.task('encodeAll', function() {
   encoded = encoded.replace(re, "'");
   output += encoded + ';';
 
-  console.log(output);
+  // console.log(output);
+  console.log('IMAGES ENCODED');
   console.log('BYTES: ' + output.length);
+  console.log('IMAGES: ' + totalImages);
 
 
   fs.writeFileSync('js/game/data/i.js', output);
@@ -226,4 +223,5 @@ gulp.task('lint', function() {
   // Brick on failure to be super strict
   .pipe(eslint.failOnError());
 });
+
 

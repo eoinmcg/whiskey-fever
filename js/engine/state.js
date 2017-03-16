@@ -6,23 +6,24 @@ class State {
   }
 
   init() {
-    this.bgCol = $.cols.nightblue;
+    this.bgCol = false;
     this.fader = 0;
   }
 
-  update() {
+  update(step) {
 
     let g = this.g,
-        i = g.ents.length;
-
-    for (let n of g.ents) {
-      n.update();
-    }
+      i = g.ents.length;
 
     while (i--) {
-          if (g.ents[i].remove) {
-              g.ents.splice(i, 1);
-          }
+      g.ents[i].update(step);
+    }
+
+    i = g.ents.length;
+    while (i--) {
+      if (g.ents[i].remove) {
+        g.ents.splice(i, 1);
+      }
     }
 
 
@@ -32,8 +33,8 @@ class State {
       if (!e) {
         break;
       }
-      e.time -= ( g.dt / 1000 );
-      // console.log(i, e.time);
+      
+      e.time -= step;
       if (e.time < 0) {
         e.cb.call(this);
         g.events.splice(i, 1);
@@ -45,11 +46,16 @@ class State {
 
   render() {
 
-    this.g.draw.clear(this.bgCol);
-
-    for (let n of this.g.ents) {
-      n.render();
+    let i = this.g.ents.length;
+    if (this.bgCol) {
+      this.g.draw.clear(this.bgCol);
     }
+
+    for (i = 0; i < this.g.ents.length; i += 1) {
+      this.g.ents[i].render();
+    }
+
+
   }
 
 }

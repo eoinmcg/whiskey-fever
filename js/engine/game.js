@@ -3,16 +3,12 @@ class Game {
   constructor() {
 
     let ua = navigator.userAgent.toLowerCase(),
-        w, h;
+      w, h;
 
     this.l = document.getElementById('l');
-    this.l = document.getElementById('h');
+    this.h = document.getElementById('h');
 
-    if ($.data.orientation === 'portrait') {
-      w = 320; h = 480;
-    } else {
-      w = 480; h = 320;
-    }
+    w = 320; h = 480;
 
     this.c = document.getElementsByTagName('canvas')[0];
     this.ctx = this.c.getContext('2d');
@@ -23,19 +19,18 @@ class Game {
     this.c.style.width = w + 'px';
     this.c.style.height = h + 'px';
 
-    this.dt = 0;
-    this.tick = 0;
-    this.prevStep = new Date().getTime();
-    this.currStep = new Date().getTime();
+    this.dt   = 0;
+    this.fps  = 60;
+    this.frameStep = 1/ this.fps;
+    this.frameCurr = 0;
+    this.framePrev = $.H.timeStamp();
 
-		this.mobile = 'createTouch' in document || false;
+    this.mobile = 'createTouch' in document || false;
     this.android = ua.indexOf('android') > -1;
     this.ios = /ipad|iphone|ipod/.test(ua);
     this.firefox = ua.indexOf('firefox') > -1;
 
     this.plays = 0;
-
-
 
     this.events = [];
     this.ents = [];
@@ -57,11 +52,11 @@ class Game {
     this.emitter = new Emitter(this);
     this.shake = new Shake(this);
 
-    if (!$.data.audio || this.firefox || this.ios) {
+    if ( this.ios) {
       this.audio = { play: function() {}, say: function() {} };
     } else {
       this.audio = $.Audio;
-      this.audio.init();
+      this.audio.init(this);
     }
 
     this.load = new Load(this);
@@ -74,16 +69,8 @@ class Game {
 
     this.scale();
 
-    $.H.mkFavicon(this.draw.scale(this.imgs.icon, 4));
+    $.H.mkFavicon(this.draw.scale(this.imgs.icon, 8));
     this.changeState('Title');
-
-    if (typeof Stats !== 'undefined' && window.location.search.indexOf('stats') !== -1) {
-      this.stats = new Stats();
-      this.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-      document.body.appendChild( this.stats.dom );
-    } else {
-      this.stats = {begin: function() {}, end: function() {}};
-    }
 
     this.loop();
 
@@ -96,30 +83,29 @@ class Game {
 
   loop() {
 
-    this.stats.begin();
-    this.currStep = new Date().getTime();
-    this.dt = this.currStep - this.prevStep;
-    this.tick += 1;
+    this.frameCurr = $.H.timeStamp();
+    this.dt = this.dt + Math.min(1, (this.frameCurr - this.framePrev) / 1000);
     this.c.className = '';
     this.input.poll();
 
+    while(this.dt > this.frameStep) {
+      this.dt = this.dt - this.frameStep;
+      this.state.update(this.frameStep);
+    }
 
-    this.shake.update();
-    this.state.update();
-    this.state.render();
+    this.shake.update(this.dt);
+    this.state.render(this.dt);
 
-    this.prevStep = this.currStep;
-    this.stats.end();
-
+    this.framePrev = this.frameCurr;
 
     requestAnimationFrame(() => this.loop());
 
   }
 
-  update() {
+  update(step) {
 
     for (let n of this.ents) {
-      n.update();
+      n.update(step);
     }
 
   }
@@ -128,8 +114,6 @@ class Game {
 
     this.draw.clear();
 
-
-    this.draw.rect(100, 100, 100, 100, 'pink');
     for (let n of this.ents) {
       n.render();
     }
@@ -139,28 +123,24 @@ class Game {
   scale() {
 
 
-    if ($.data.orientation === 'portrait') {
-      this.scalePortrait();
-    } else {
-      this.scaleLandscape();
-    }
+    this.scalePortrait();
 
   }
 
   scalePortrait() {
     let winH = window.innerHeight,
-        ratio = this.w / this.h,
-        w2 = winH * ratio,
-        scale = w2 / this.w;
+      ratio = this.w / this.h,
+      w2 = winH * ratio,
+      scale = w2 / this.w;
 
-      if (this.mobile && winH < window.innerWidth) {
-          this.l.style.display = 'block';
-          $.H.el('h').innerHTML = 'Rotate Device';
-          this.c.style.display = 'none';
-      } else {
-          this.l.style.display = 'none';
-          this.c.style.display = 'block';
-      }
+    if (this.mobile && winH < window.innerWidth) {
+      this.l.style.display = 'block';
+      $.H.el('h').innerHTML = 'Rotate Device';
+      this.c.style.display = 'none';
+    } else {
+      this.l.style.display = 'none';
+      this.c.style.display = 'block';
+    }
 
     if (window.navigator.standalone === true && this.ios) {
       return;
@@ -177,8 +157,6 @@ class Game {
   }
 
 
-  scaleLandscape() { }
-
   changeState(state) {
 
     this.ents = [];
@@ -186,35 +164,29 @@ class Game {
 
     switch (state) {
 
-      case 'Touch':
-        this.state = new Touch(this);
-      break;
-
       case 'Title':
         this.state = new Title(this);
-      break;
+        break;
 
       case 'Intro':
         this.state = new Intro(this);
-      break;
+        break;
 
       case 'Splash':
         this.state = new Splash(this);
-      break;
+        break;
 
       case 'Play':
         this.state = new Play(this);
-      break;
+        break;
 
-      default:
-      break;
     }
 
   }
 
   mkFont(col, scale) {
     let g = this,
-        f = g.draw.scale(g.fonts[col], scale);
+      f = g.draw.scale(g.fonts[col], scale);
 
     f.scale = scale;
     return f;

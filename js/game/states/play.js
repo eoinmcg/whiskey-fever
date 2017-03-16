@@ -31,8 +31,8 @@ class Play extends State {
 
   }
 
-  update() {
-    super.update();
+  update(step) {
+    super.update(step);
 
     if (this.g.lives < 0 && !this.gameOver) {
       this.g.audio.play('gameover');
@@ -42,7 +42,7 @@ class Play extends State {
         this.g.hiScore = this.g.score;
 
         this.g.ents.push(new Text(this.g, {x: false, y: 350, text: 'NEW HISCORE', 
-                        scale: 6, col: 'w'}));
+          scale: 6, col: 'w'}));
 
       }
       // this.g.addEvent({
@@ -63,7 +63,7 @@ class Play extends State {
             cb: () => { 
               this.g.audio.play('tap');
               this.g.changeState('Play');
-              }
+            }
           }));
           this.quitButton = this.g.ents.push(new Button(this.g, {
             y: 360,
@@ -132,7 +132,7 @@ class Play extends State {
 
   explodeDrips() {
     let i = 0,
-        found = false;
+      found = false;
     for (i = 0; i < this.g.ents.length; i += 1) {
       if (this.g.ents[i].name === 'drop') {
         found = true;
@@ -155,8 +155,8 @@ class Play extends State {
 
   spawn() {
     let scale = $.H.rnd(2,6),
-        delay = $.H.rnd(0.5,2.5),
-        s = this;
+      delay = $.H.rnd(0.5,2.5),
+      s = this;
 
     if (this.gameOver || this.inWave < 0) {
       return;
@@ -216,4 +216,5 @@ class Play extends State {
   }
 
 }
+
 

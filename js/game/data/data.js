@@ -1,7 +1,29 @@
-$.data = {
+$.data = { title: 'Whiskey Fever' };
 
-    version: '0.1',
-    title: 'Whiskey Fever',
-    orientation: 'portrait',
-    audio: true
+
+$.loadCallback = function(g) {
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(function(reg) {
+      console.log('Successfully registered service worker', reg);
+    }).catch(function(e) {
+      console.warn('Error registering service worker', e);
+    });
+  }
+
+  window.addEventListener('online', function(e) {
+    // Resync data with server.
+    console.log("online");
+    Page.hideOfflineWarning();
+    Arrivals.loadData();
+  }, false);
+
+  window.addEventListener('offline', function(e) {
+    console.log("offline");
+  }, false);
+
+  if (navigator.onLine) {
+  } else {
+  }
+
 };

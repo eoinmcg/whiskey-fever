@@ -1,3 +1,4 @@
+
 // http://www.superflashbros.net/as3sfxr/
   $.data.sfx = {
       jump: [0,,0.2432,,0.1709,0.3046,,0.1919,,,,,,0.5923,,,,,1,,,,,0.5],

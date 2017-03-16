@@ -10,22 +10,21 @@ class Particle extends Sprite {
     this.w = 4;
     this.h = 4;
 
-
     this.lifespan = $.H.rnd(20,50);
     this.ttl = this.lifespan;
     this.alpha = 1;
 
 
-    this.vx = ( $.H.rnd(0, 600) - 300 ) / 1000;  
-    this.vy = ( $.H.rnd(0, 600) - 300 ) / 1000;  
+    this.vx = o.vx || ( $.H.rnd(0, 300) - 300 );  
+    this.vy = o.vy || ( $.H.rnd(0, 300) * -1 );  
   }
 
 
-  update() {
-    super.update();
+  update(step) {
+    super.update(step);
 
-    this.x += this.vx * this.g.dt; 
-    this.y += this.vy * this.g.dt; 
+    this.x += this.vx * step; 
+    this.y += this.vy * step; 
 
 
     this.ttl -= 1;
@@ -38,12 +37,14 @@ class Particle extends Sprite {
 
   render() {
 
-    var g = this.g;
+    let g = this.g;
 
-    g.ctx.globalAlpha = (this.ttl / this.lifespan);
+    if (g.ios) {
+      return;
+    }
+
 
     g.draw.rect(this.x, this.y, 5, 5, $.cols[this.col]);
-    g.ctx.globalAlpha = 1;
 
   }
 

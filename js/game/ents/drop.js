@@ -3,7 +3,7 @@ class Drop extends Sprite {
   constructor(g, o) {
     o.vx = 0;
     o.vy = 0;
-    o.gravity = 0.1;
+    o.gravity = 100;
     o.scale = 3;
     o.i = 'drop';
     o.group = 'baddie';
@@ -12,18 +12,16 @@ class Drop extends Sprite {
 
   }
 
-  updateMove() {
-
-    let dt = this.g.dt/ 1000;
+  updateMove(step) {
 
     if (this.p.spilt) {
       return true;
     }
 
-    this.x += this.vx * dt; 
-    this.y += this.vy * dt; 
+    this.x += this.vx * step; 
+    this.y += this.vy * step; 
 
-    this.vy += this.gravity * dt;
+    this.vy += this.gravity * step;
 
     if (this.y > ( this.p.floor + 4 ) || this.p.gameOver) {
       this.dead = true;
@@ -37,10 +35,10 @@ class Drop extends Sprite {
 
 
   explode() {
-      this.kill();
-      this.g.cloud.changeAnim('rage');
-      this.g.emitter.particle(5, this.x + (this.w / 2), this.y + (this.h / 2),
-          ['blaze']);
+    this.kill();
+    this.g.cloud.changeAnim('rage');
+    this.g.emitter.particle(5, this.x + (this.w / 2), this.y + (this.h / 2),
+      ['blaze']);
   }
 
 

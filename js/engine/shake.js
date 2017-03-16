@@ -16,15 +16,17 @@ class Shake {
   update() {
 
     let g = this.g,
-        c = this.c,
-        m = $.H.rnd(-this.mag, this.mag);
+      c = this.c,
+      m = $.H.rnd(-this.mag, this.mag);
 
 
     this.ttl -= 1;
 
-    if (this.ttl === 0) {
-        c.style.marginLeft = this.l + 'px';
-        c.style.marginTop = '0px';
+    if (this.g.ios) {
+      return;
+    } else if (this.ttl === 0) {
+      c.style.marginLeft = this.l + 'px';
+      c.style.marginTop = '0px';
     } else if (this.ttl > 0) {
       c.style.marginTop = m + 'px';
       c.style.marginLeft = (m + this.l) + 'px';
