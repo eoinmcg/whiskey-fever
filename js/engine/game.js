@@ -67,7 +67,9 @@ class Game {
 
   init() {
 
-    this.scale();
+    window.setTimeout(() => { 
+      this.scale();
+    }, 500);
 
     $.H.mkFavicon(this.draw.scale(this.imgs.icon, 8));
     this.changeState('Title');
@@ -75,9 +77,7 @@ class Game {
     this.loop();
 
 
-    window.addEventListener('resize', 
-      () => this.scale(), 
-      false);
+    window.addEventListener('resize', () => this.scale(), false);
 
   }
 

@@ -37,7 +37,7 @@ class Load {
 
     if (s.imgsLoaded === s.imgsTotal) {
       window.setTimeout(() => { 
-        this.mkFonts() ;
+        this.mkFonts();
         $.loadCallback(this.g);
       }, 900);
     }
