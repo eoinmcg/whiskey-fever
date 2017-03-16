@@ -1,6 +1,6 @@
 # Whiskey Fever
 
-![Screenshot](https://github.com/eoinmcg/whiskey-fever/raw/promo/anim.gif)
+![Screenshot](https://eoinmcg.github.io/whiskey-fever/promo/anim.gif)
 
 Whiskey themed remake of the arcade classic game Kaboom
 
