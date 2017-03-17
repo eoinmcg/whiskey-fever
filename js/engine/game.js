@@ -142,7 +142,9 @@ class Game {
       this.c.style.display = 'block';
     }
 
-    if (window.navigator.standalone === true && this.ios) {
+    // stops resizing if already in fullscreen mode
+    if ((window.navigator.standalone === true && this.ios) ||
+         window.matchMedia('(display-mode: standalone)').matches) {
       return;
     }
 

@@ -12,10 +12,7 @@ $.loadCallback = function(g) {
   }
 
   window.addEventListener('online', function(e) {
-    // Resync data with server.
     console.log("online");
-    Page.hideOfflineWarning();
-    Arrivals.loadData();
   }, false);
 
   window.addEventListener('offline', function(e) {

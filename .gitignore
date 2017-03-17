@@ -3,4 +3,5 @@ screenshots/
 node_modules/
 img.php
 game.zip
+npm-debug.log
 

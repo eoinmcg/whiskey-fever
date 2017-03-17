@@ -50,11 +50,11 @@ class Drop extends Sprite {
     this.g.score += 1;
     this.g.player.changeAnim('gulp');
 
-    // if (!this.g.ios) {
-      this.g.ents.push(new Bonus(this.g, {
-        x: this.x, y: this.y
-      }));
-    // }
+    if (this.g.ios) { return; }
+
+    this.g.ents.push(new Bonus(this.g, {
+      x: this.x, y: this.y
+    }));
 
   } 
 

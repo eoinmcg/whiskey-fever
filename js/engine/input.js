@@ -48,10 +48,10 @@ class Input {
       (e) => this.m.click = 0, false);
 
     l('touchstart',
-      (e) => { this.m.click = 1; this.trackMove(e.touches[0]); }, false);
+      (e) => { e.preventDefault(); this.m.click = 1; this.trackMove(e.touches[0]); }, false);
 
     l('touchend',
-      (e) => { this.m.click = 0; this.trackMove(e.touches[0]); }, false);
+      (e) => { e.preventDefault(); this.m.click = 0; this.trackMove(e.touches[0]); }, false);
 
     l('touchmove',
       (e) => { e.preventDefault(); this.trackMove(e.touches[0]); }, false);

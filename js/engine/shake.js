@@ -22,9 +22,8 @@ class Shake {
 
     this.ttl -= 1;
 
-    // if (this.g.ios) {
-    //   return;
-    // }
+    if (this.g.ios) { return; }
+
     if (this.ttl === 0) {
       c.style.marginLeft = this.l + 'px';
       c.style.marginTop = '0px';
